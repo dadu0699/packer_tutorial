@@ -7,15 +7,27 @@ packer {
   }
 }
 
+
+variable "docker_image" {
+  type    = string
+  default = "ubuntu:jammy"
+}
+
 source "docker" "ubuntu" {
-  image  = "ubuntu:jammy"
+  image  = var.docker_image
+  commit = true
+}
+
+source "docker" "ubuntu-focal" {
+  image  = "ubuntu:focal"
   commit = true
 }
 
 build {
   name = "learn-packer"
   sources = [
-    "source.docker.ubuntu"
+    "source.docker.ubuntu",
+    "source.docker.ubuntu-focal",
   ]
 
   provisioner "shell" {
@@ -29,6 +41,6 @@ build {
   }
 
   provisioner "shell" {
-    inline = ["echo This provisioner runs last"]
+    inline = ["echo Running $(cat /etc/os-release | grep VERSION= | sed 's/\"//g' | sed 's/VERSION=//g') Docker image."]
   }
 }
