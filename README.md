@@ -2,10 +2,6 @@
 
 Este repositorio contiene ejemplos y guías para aprender a utilizar **Packer** para crear imágenes de infraestructura como código (IaC) de manera automatizada y consistente. Packer es una herramienta de HashiCorp que te permite crear imágenes de máquina para múltiples plataformas de manera repetible.
 
-## ¿Qué es Packer?
-
-**Packer** es una herramienta de infraestructura como código (IaC) que automatiza la creación de imágenes de máquinas virtuales y contenedores. Permite crear imágenes de máquinas de manera idéntica y consistente para diferentes plataformas, como **AWS**, **Docker**, **VirtualBox**, entre otras. Con Packer, puedes definir tu infraestructura como una plantilla que puede ser versionada, reutilizada y compartida.
-
 ## Requisitos Previos
 
 Antes de comenzar, asegúrate de tener las siguientes herramientas instaladas:
@@ -13,17 +9,6 @@ Antes de comenzar, asegúrate de tener las siguientes herramientas instaladas:
 - **Packer**: Puedes descargarlo desde [la página oficial de Packer](https://www.packer.io/downloads).
 - **Docker** (si estás trabajando con Docker).
 - **AWS CLI** (si estás trabajando con AWS).
-
-## Estructura del Proyecto
-
-El proyecto está organizado de la siguiente manera:
-
-- **`packer_tutorial/`**
-  - **`Docker/`**: Carpeta con ejemplos para Docker
-    - **`docker-ubuntu.pkr.hcl`**: Archivo de plantilla Packer para Docker
-  - **`AWS/`**: Carpeta con ejemplos para AWS
-    - **`aws-ami.pkr.hcl`**: Archivo de plantilla Packer para AWS
-  - **`README.md`**: Este archivo
 
 ## Comandos Básicos de Packer
 
@@ -80,8 +65,6 @@ packer build <archivo>.pkr.hcl
 - Packer comienza a construir la imagen, utilizando la plantilla que has definido. Dependiendo de los _builders_ y _provisioners_ que hayas especificado, Packer descargará imágenes base, configurará máquinas virtuales o contenedores, y aplicará los cambios definidos.
 - El archivo resultante es una imagen de máquina que se puede usar en entornos de producción.
 
----
-
 ## Explicación de la Plantilla Packer (Ejemplo General)
 
 Aquí te presentamos un ejemplo general de cómo se estructura una plantilla de **Packer** en HCL (HashiCorp Configuration Language).
@@ -127,12 +110,8 @@ build {
    - **`name`**: Define un nombre para el proceso de construcción. No es obligatorio, pero es útil para identificar el proceso en los registros.
    - **`sources`**: Aquí defines las fuentes de los _builders_ que utilizarás. En este caso, estamos usando `source.docker.ubuntu`, que corresponde al _builder_ que definimos previamente.
 
----
-
 ## Conclusión
 
 Packer es una herramienta poderosa y flexible para automatizar la creación de imágenes de infraestructura para múltiples plataformas. Ya sea que estés trabajando con Docker, AWS o cualquier otra plataforma, Packer te permite definir tu infraestructura como código y crear imágenes de manera repetible y consistente.
 
 Este repositorio contiene ejemplos tanto para Docker como para AWS, y puedes extenderlo para experimentar con otras plataformas soportadas por Packer.
-
----
