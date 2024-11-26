@@ -4,10 +4,6 @@ packer {
       version = ">= 1.3.3"
       source  = "github.com/hashicorp/amazon"
     }
-    azure = {
-      source  = "github.com/hashicorp/azure"
-      version = ">= 2.2.0"
-    }
   }
 }
 
@@ -69,7 +65,7 @@ build {
 
   provisioner "shell" {
     inline = [
-      "echo Installing Node.js",
+      "echo 'Installing Node.js with fnm'",
       "cd ~",
       "sudo apt update",
       "curl -fsSL https://fnm.vercel.app/install | bash",
@@ -80,6 +76,13 @@ build {
     ]
   }
 
+  provisioner "shell" {
+    inline = [
+      "echo 'Installing PM2 process manager'",
+      "sudo npm install pm2@latest -g",
+    ]
+  }
+
   provisioner "file" {
     source      = "./hello.js"
     destination = "/home/ubuntu/hello.js"
@@ -87,19 +90,25 @@ build {
 
   provisioner "shell" {
     inline = [
-      "echo Creating a simple Node.js app",
+      "echo 'Creating a simple Node.js app and running it with PM2'",
       "cd ~",
       "mkdir -p app",
       "mv /home/ubuntu/hello.js app/hello.js",
       "cd app",
-      "node hello.js",
+      "pm2 start hello.js",
     ]
+  }
+
+  provisioner "file" {
+    source      = "./nginx.conf"
+    destination = "/etc/nginx/nginx.conf"
   }
 
   provisioner "shell" {
     inline = [
       "echo 'Serving the app with Nginx'",
-      "sudo nano /etc/nginx/sites-available/app.example.com.conf",
+      "sudo nginx -t",
+      "sudo systemctl restart nginx",
     ]
   }
 
