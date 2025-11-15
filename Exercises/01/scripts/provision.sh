@@ -26,9 +26,9 @@ sudo apt update -y
 sudo apt upgrade -y
 
 echo "[Provisioner] Installing base dependencies..."
-# - curl, unzip, ca-certificates: Standard tools for downloading/managing files.
+# - curl, unzip: Standard tools for downloading/managing files.
 # - build-essential: Required by fnm to compile Node.js from source if needed.
-sudo apt install -y curl unzip ca-certificates build-essential
+sudo apt install -y curl unzip build-essential
 
 # --- Node.js Installation (via fnm) ---
 
@@ -40,8 +40,8 @@ curl -o- https://fnm.vercel.app/install | bash
 # The installer only modifies .bashrc, which isn't sourced in this script.
 # We must manually export fnm's variables into the current session's
 # environment to make the 'fnm' command available.
-export FNM_DIR="$HOME/.local/share/fnm"
-export PATH="$FNM_DIR:$PATH"
+export FNM_PATH="$HOME/.local/share/fnm"
+export PATH="$FNM_PATH:$PATH"
 
 # Similarly, we must explicitly tell 'fnm env' to use 'bash' syntax.
 eval "$(fnm env --shell bash)"
@@ -77,12 +77,12 @@ echo "[Provisioner] Creating systemd service for the Node.js app..."
 # Find the absolute path to the fnm-installed Node.js executable.
 # This is required for the systemd service file, as the 'root' user
 # running systemd does not have the 'ubuntu' user's fnm shims in its PATH.
-NODE_PATH=$(which node)
+NODE_PATH=$(find /home/ubuntu/.local/share/fnm/node-versions/ -type f -path "*/v24*/bin/node" | head -n 1)
 if [ -z "$NODE_PATH" ]; then
-    echo "FATAL: Could not find 'node' executable in PATH. Exiting."
+    echo "FATAL: Could not find permanent 'node' executable path for fnm. Exiting."
     exit 1
 fi
-echo "[Provisioner] Node.js executable found at: $NODE_PATH"
+echo "[Provisioner] Permanent Node.js executable found at: $NODE_PATH"
 
 # Create the systemd service file using a "here document" (cat <<EOF).
 cat <<EOF | sudo tee /etc/systemd/system/nodeapp.service
