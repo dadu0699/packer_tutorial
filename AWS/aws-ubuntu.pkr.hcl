@@ -1,7 +1,7 @@
 packer {
   required_plugins {
     amazon = {
-      version = ">= 1.3.3"
+      version = ">= 1.7.1"
       source  = "github.com/hashicorp/amazon"
     }
     vagrant = {
