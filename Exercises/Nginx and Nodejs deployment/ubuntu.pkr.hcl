@@ -60,4 +60,8 @@ build {
   provisioner "shell" {
     script = "scripts/provision.sh"
   }
+
+  provisioner "shell" {
+    script = "scripts/provision.sh"
+  }
 }
