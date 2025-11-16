@@ -61,7 +61,7 @@ build {
     script = "scripts/provision.sh"
   }
 
-  provisioner "shell" {
-    script = "scripts/provision.sh"
+  post-processor "manifest" {
+    output = "packer-manifest.json"
   }
 }
