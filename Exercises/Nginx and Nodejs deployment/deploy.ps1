@@ -24,7 +24,7 @@ $InstanceType = "t2.micro"          # Instance size for deployment
 $KeyName = "devops-node-key"   # Key Pair name for SSH access
 $SecurityGroupName = "devops-node-sg"    # Security Group name
 $InstanceTagName = "node-nginx-packer" # Name tag for the deployed EC2 instance
-$PackerTemplatePath = "ubuntu.pkr.hcl"    # Path to the Packer template
+$PackerTemplatePath = "aws.pkr.hcl"    # Path to the Packer template
 $ManifestPath = "packer-manifest.json"# Path to the manifest created by Packer
 
 # Set PowerShell to stop execution immediately upon any error (best practice)
