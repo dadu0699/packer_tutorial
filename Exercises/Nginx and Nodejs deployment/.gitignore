@@ -1,2 +1,4 @@
 devops-node-key.pem
+
 packer-manifest.json
+packer-manifest.json.lock
