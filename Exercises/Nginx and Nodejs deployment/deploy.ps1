@@ -86,7 +86,7 @@ if ([string]::IsNullOrWhiteSpace($KeyExists) -or $KeyExists -eq "None") {
         --key-name $KeyName `
         --region $AwsRegion `
         --query "KeyMaterial" `
-        --output text | Out-File -FilePath $pemFile -Encoding ASCII
+        --output text > $pemFile
 
     # Permisos seguros al .pem
     icacls $pemFile /inheritance:r | Out-Null
