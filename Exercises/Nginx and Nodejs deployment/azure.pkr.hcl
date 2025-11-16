@@ -58,6 +58,8 @@ source "azure-arm" "ubuntu" {
     environment = "devops-course"
     role        = "node-nginx"
   }
+
+  ssh_username = "ubuntu"
 }
 
 build {
